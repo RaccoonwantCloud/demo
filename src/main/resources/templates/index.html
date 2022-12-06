@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>가짜 당근마켓</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <header style="border: solid 1px black; width: 100%">
+      <h1>가짜 당근마켓</h1>
+      <hr class="my-4">
+      <div class="row">
+        <div class="col" th:if="${memberName !=null}">
+          <h4 class="mb-3" th:if="${memberName != null}" th:text="| 로그인 사용자 이름: ${memberName}|"> 로그인 사용자 이름</h4>
+          <form th:action="@{/logout}" method="post">
+            <button class="w-100 btn btn-dark btn-lg" onclick="location.href='items.html'" type="submit">
+              로그아웃
+            </button>
+          </form>
+        </div>
+        <div class="col" th:if="${memberName == null}">
+          <button type="button" class="btn btn-primary" onclick="location.href='/login'">로그인</button>
+          <button type="button" class="btn btn-primary" onclick="location.href='/join'">회원가입</button>
+        </div>
+      </div>
+    </header>
+    <div style="border: solid 1px blue; width: 100%">
+      <h1>메인 페이지</h1>
+      <form action="searchProduct" method="GET" class="form-inline p-2 bd-highlight" role="search">
+        <input type="text" name="pName" class="form-control" id="search" placeholder="검색">
+        <button class="btn btn-success bi bi-search"></button>
+      </form>
+      <hr class="my-4">
+      <table class="productList">
+        <colgroup>
+          <col style="width: 25%;">
+          <col style="width: 25%;">
+          <col style="width: 25%;">
+          <col style="width: 25%;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>상품명</th>
+            <th>상품가격</th>
+            <th>설명</th>
+            <th>판매자</th>
+          </tr>
+        </thead>
+        <tbody id = "productTbl">
+          <tr th:each="pd, pdStat:${products}">
+            <td th:text="${pd.pName}"></td>
+            <td th:text="${pd.pPrice}"></td>
+            <td th:text="${pd.pDescription}"></td>
+            <td th:text="${pd.pOwner}"></td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+    <hr>
+    <div>
+    <p>Kafka Test</p>
+     <form action="postMessage" method="post">
+       <input id="message" name="message">
+       <button type="submit">Server로 전송</button>
+     </form>
+    </div>
+    <footer style="border: solid 1px blueviolet; width: 100%">
+      <h1>Footer</h1>
+    </footer>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+	    $(document).on("click", "#productTbl tr", function (e) {
+		 alert("gd");
+			  });
+			});
+</script>
